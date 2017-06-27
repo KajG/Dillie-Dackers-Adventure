@@ -9,12 +9,15 @@ public class CheckEnemy : MonoBehaviour {
 	public int enemyIndex;
 	void Start () {
 		enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+		enemyIndex = enemies.Count + 1;
 	}
-	
 	void Update () {
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, transform.right, distance, layermask);
-		if (hit.collider != null && hit.collider.tag == "Enemy") {
-			print ("hitting + " + hit.collider.name);
+		RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, transform.right, distance, layermask);
+		if (hit[0].collider != null && hit[0].collider.tag == "Enemy") {
+			print ("hitting : " + hit[0].collider.name);
+			SetEnemyIndex (hit[0].transform.gameObject);
+		} else {
+			enemyIndex = enemies.Count + 1;
 		}
 	}
 	public void SetEnemyIndex(GameObject obj){

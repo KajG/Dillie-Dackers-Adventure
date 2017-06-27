@@ -13,7 +13,7 @@ public class SwordAttack : MonoBehaviour {
 	private CheckEnemy checkenemy;
 	private FetchInput fetchinput;
 	void Start () {
-		checkenemy = GameObject.Find ("Player").GetComponent<CheckEnemy> ();
+		checkenemy = GameObject.Find ("RaycastPlayer").GetComponent<CheckEnemy> ();
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		col = GameObject.Find ("Collider").GetComponent<BoxCollider2D> ();
 	}
@@ -26,16 +26,6 @@ public class SwordAttack : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			Attack (damage);
 			AttackAnim ();
-		}
-	}
-	void OnTriggerEnter2D(Collider2D other){
-		if (other.tag == "Enemy") {
-			checkenemy.SetEnemyIndex (other.gameObject);
-		}
-	}
-	void OnTriggerExit2D(Collider2D other){
-		if (other.tag == "Enemy") {
-			//someoneHit = false;
 		}
 	}
 	void Attack(float damage){
