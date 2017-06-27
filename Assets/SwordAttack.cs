@@ -9,48 +9,33 @@ public class SwordAttack : MonoBehaviour {
 	[SerializeField]private float damage;
 	[SerializeField]private float swordAnimTime;
 	[SerializeField]private bool someoneHit;
-	public delegate void AttackDel (float damage);
-	public event AttackDel Attacked;
 	public List<GameObject> enemies = new List<GameObject>();
-	public EnemyHealth enemyHealth;
+	private CheckEnemy checkenemy;
 	private FetchInput fetchinput;
-	private int enemyIndex;
 	void Start () {
+		checkenemy = GameObject.Find ("Player").GetComponent<CheckEnemy> ();
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		col = GameObject.Find ("Collider").GetComponent<BoxCollider2D> ();
-		enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 	}
-		
 	void Update () {
 		if (fetchinput.getLastKey == 2) {
 			col.offset = new Vector2(-0.96f, col.offset.y);
 		} else {
 			col.offset = new Vector2(0.96f, col.offset.y);
 		}
-		if (Input.GetKeyDown (KeyCode.Space) && someoneHit) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			Attack (damage);
 			AttackAnim ();
-		} else if(Input.GetKeyDown(KeyCode.Space)){
-			AttackAnim ();
-		}
-		if (enemies [enemyIndex] == null) {
-			enemies.RemoveAt (enemyIndex);
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Enemy") {
-			someoneHit = true;
-			for (int i = 0; i < enemies.Count; i++) {
-				if (other.gameObject == enemies [i]) {
-					enemyIndex = i;
-				}
-			}
+			checkenemy.SetEnemyIndex (other.gameObject);
 		}
 	}
 	void OnTriggerExit2D(Collider2D other){
 		if (other.tag == "Enemy") {
-			someoneHit = false;
-			enemyIndex = 0;
+			//someoneHit = false;
 		}
 	}
 	void Attack(float damage){
@@ -61,6 +46,6 @@ public class SwordAttack : MonoBehaviour {
 	}
 	IEnumerator Attacking(float damage){
 		yield return new WaitForSeconds (swordAnimTime);
-		enemies [enemyIndex].GetComponent<EnemyHealth> ().TakeDamage (damage);
+		checkenemy.enemies [checkenemy.enemyIndex].GetComponent<EnemyHealth> ().TakeDamage (damage);
 	}
 }
