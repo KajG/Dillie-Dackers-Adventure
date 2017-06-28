@@ -36,6 +36,8 @@ public class SwordAttack : MonoBehaviour {
 	}
 	IEnumerator Attacking(float damage){
 		yield return new WaitForSeconds (swordAnimTime);
-		checkenemy.enemies [checkenemy.enemyIndex].GetComponent<EnemyHealth> ().TakeDamage (damage);
+		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
+			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (damage);
+		}
 	}
 }
