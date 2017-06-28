@@ -7,24 +7,30 @@ public class CheckEnemy : MonoBehaviour {
 	public LayerMask layermask;
 	public float distance;
 	public int enemyIndex;
+	public List<int> enemyIndexes = new List<int> ();
 	void Start () {
 		enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-		enemyIndex = enemies.Count + 1;
 	}
 	void Update () {
-		RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, transform.right, distance, layermask);
-		if (hit[0].collider != null && hit[0].collider.tag == "Enemy") {
-			print ("hitting : " + hit[0].collider.name);
-			SetEnemyIndex (hit[0].transform.gameObject);
-		} else {
-			enemyIndex = enemies.Count + 1;
-		}
-	}
-	public void SetEnemyIndex(GameObject obj){
-		for (int i = 0; i < enemies.Count; i++) {
-			if (obj == enemies [i]) {
-				enemyIndex = i;
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, transform.right, distance, layermask);
+		List<GameObject> objs = new List<GameObject> ();
+		for (int i = 0; i < hits.Length; i++) {
+			if (hits[i].collider != null && hits[i].collider.tag == "Enemy") {
+				objs.Add (hits [i].transform.gameObject);
 			}
 		}
+		SetEnemyIndex (objs);
+	}
+	public void SetEnemyIndex(List<GameObject> obj){
+		List<int> tempList = new List<int> ();
+		for (int i = 0; i < obj.Count; i++) {
+			for (int j = 0; j < enemies.Count; j++) {
+				if (obj [i] == enemies [j]) {
+					tempList.Add (j);
+				}
+			}
+		}
+		enemyIndexes = tempList;
+		print (enemyIndexes.Count);
 	}
 }
