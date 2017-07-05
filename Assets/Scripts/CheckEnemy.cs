@@ -31,6 +31,5 @@ public class CheckEnemy : MonoBehaviour {
 			}
 		}
 		enemyIndexes = tempList;
-		print (enemyIndexes.Count);
 	}
 }
