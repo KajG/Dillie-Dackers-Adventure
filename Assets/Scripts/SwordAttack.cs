@@ -10,6 +10,7 @@ public class SwordAttack : MonoBehaviour {
 	[SerializeField]private float swordAnimTime;
 	[SerializeField]private bool someoneHit;
 	public List<GameObject> enemies = new List<GameObject>();
+	public float getDamage{get{return damage;}set{damage = value;}}
 	private CheckEnemy checkenemy;
 	private FetchInput fetchinput;
 	void Start () {
@@ -28,12 +29,12 @@ public class SwordAttack : MonoBehaviour {
 			AttackAnim ();
 		}
 	}
-	void Attack(float damage){
+	public void Attack(float damage){
 		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
 			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (damage);
 		}
 	}
-	void AttackAnim(){
+	public void AttackAnim(){
 		Destroy (Instantiate (anim, new Vector3(col.transform.position.x + col.offset.x * 2, col.transform.position.y, 0), Quaternion.identity), swordAnimTime);
 	}
 
