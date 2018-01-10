@@ -13,14 +13,10 @@ public class PlayerMovement : MonoBehaviour {
 	public float rotationSpeed;
 	public float movementSpeed;
 	public FetchInput fetchinput;
-	private CheckEnemy checkenemy;
-	private SwordAttack swordattack;
 	private SwordPhysics swordphysics;
 	private Rigidbody2D rb;
 	void Start(){
 		rb = GetComponent<Rigidbody2D> ();
-		swordattack = GameObject.Find ("Sword").GetComponent<SwordAttack> ();
-		checkenemy = GameObject.Find ("RaycastPlayer").GetComponent<CheckEnemy> ();
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		swordphysics = GameObject.Find ("Sword").GetComponent<SwordPhysics> ();
 	}
@@ -42,13 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 			amountOfJumps--;
 		} 
 		if (rb.velocity.y < 0) {
-			rb.velocity += Vector2.up * Physics2D.gravity.y * 1.5f * Time.deltaTime;
-		}
-		if (Input.GetMouseButtonDown(1) && fetchinput.getLastKey == FetchInput.KeyPressed.A) {
-			StartCoroutine(DashDirectionX (-dashSpeed, dashTime));
-		}
-		if (Input.GetMouseButtonDown(1) && fetchinput.getLastKey == FetchInput.KeyPressed.D) {
-			StartCoroutine(DashDirectionX (dashSpeed, dashTime));
+			rb.velocity += Vector2.up * Physics2D.gravity.y * 1.5f * Time.fixedDeltaTime;
 		}
 	}
 	void WalkDirectionX(float numb){
@@ -56,22 +46,5 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	void ChangeRotation(float angle){
 		transform.localEulerAngles = new Vector3 (transform.localEulerAngles.x, transform.localEulerAngles.y, angle);
-	}
-	IEnumerator DashDirectionX(float numb, float timer){
-		bool hit = false;
-		float time = timer;
-		while(time >= 0){
-			if (time <= timer / 1.6f && !hit) {
-				swordattack.DashAnim ();
-				swordattack.Attack (swordattack.getDamage * 1.5f);
-				swordphysics.AttackAnimation (fetchinput.getLastKey);
-				hit = true;
-			}
-			checkenemy.distance = 5;
-			time -= Time.fixedDeltaTime;
-			transform.position += new Vector3 (numb, 0, 0);
-			yield return null;
-		}
-		checkenemy.distance = 2;
 	}
 }
