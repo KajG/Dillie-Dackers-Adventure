@@ -8,7 +8,6 @@ public class SwordAttack : MonoBehaviour {
 	[SerializeField]private GameObject attackAnim;
 	[SerializeField]private GameObject dashAnim;
 	[SerializeField]private float damage;
-	[SerializeField]private float swordAnimTime;
 	[SerializeField]private bool someoneHit;
 	public List<GameObject> enemies = new List<GameObject>();
 	public float getDamage{get{return damage;}set{damage = value;}}
@@ -21,7 +20,7 @@ public class SwordAttack : MonoBehaviour {
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		col = GameObject.Find ("Collider").GetComponent<BoxCollider2D> ();
 		swordphysics = GameObject.Find ("Sword").GetComponent<SwordPhysics> ();
-		damageText = GameObject.Find ("Main Camera").GetComponents ();
+		damageText = GameObject.Find ("Main Camera").GetComponent<DamageTextEffect>();
 	}
 	void Update () {
 		if (fetchinput.getLastKey == FetchInput.KeyPressed.A) {
@@ -29,7 +28,7 @@ public class SwordAttack : MonoBehaviour {
 		} else if(fetchinput.getLastKey == FetchInput.KeyPressed.D){
 			col.offset = new Vector2(-1.4f, col.offset.y);
 		}
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetMouseButtonDown(0)) {
 			Attack (damage);
 			AttackAnim ();
 			swordphysics.AttackAnimation (fetchinput.getLastKey);
@@ -38,7 +37,7 @@ public class SwordAttack : MonoBehaviour {
 	public void Attack(float damage){
 		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
 			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (damage);
-			damageText.CreateText (checkenemy.enemies [damage, checkenemy.enemyIndexes [i]].transform);
+			damageText.CreateText (damage, checkenemy.enemies [checkenemy.enemyIndexes [i]].transform);
 		}
 	}
 	public void AttackAnim(){

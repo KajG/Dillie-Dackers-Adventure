@@ -11,15 +11,14 @@ public class PlayerMovement : MonoBehaviour {
 	public float dashTime;
 	public float dashSpeed;
 	public float rotationSpeed;
-	private Rigidbody2D rig;
 	public float movementSpeed;
 	public FetchInput fetchinput;
 	private CheckEnemy checkenemy;
 	private SwordAttack swordattack;
 	private SwordPhysics swordphysics;
-
+	private Rigidbody2D rb;
 	void Start(){
-		rig = GetComponent<Rigidbody2D> ();
+		rb = GetComponent<Rigidbody2D> ();
 		swordattack = GameObject.Find ("Sword").GetComponent<SwordAttack> ();
 		checkenemy = GameObject.Find ("RaycastPlayer").GetComponent<CheckEnemy> ();
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
@@ -38,14 +37,17 @@ public class PlayerMovement : MonoBehaviour {
 			float angle = Mathf.LerpAngle (transform.localEulerAngles.z, 0, rotationSpeed * Time.fixedDeltaTime);
 			ChangeRotation (angle);
 		}
-		if (Input.GetKeyDown (KeyCode.W) && amountOfJumps > 1) {
-			rig.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
+		if (Input.GetKeyDown (KeyCode.Space) && amountOfJumps > 1) {
+			rb.velocity = Vector2.up * jumpForce;
 			amountOfJumps--;
+		} 
+		if (rb.velocity.y < 0) {
+			rb.velocity += Vector2.up * Physics2D.gravity.y * 1.5f * Time.deltaTime;
 		}
-		if (Input.GetKeyDown (KeyCode.LeftShift) && fetchinput.getLastKey == FetchInput.KeyPressed.A) {
+		if (Input.GetMouseButtonDown(1) && fetchinput.getLastKey == FetchInput.KeyPressed.A) {
 			StartCoroutine(DashDirectionX (-dashSpeed, dashTime));
 		}
-		if (Input.GetKeyDown (KeyCode.LeftShift) && fetchinput.getLastKey == FetchInput.KeyPressed.D) {
+		if (Input.GetMouseButtonDown(1) && fetchinput.getLastKey == FetchInput.KeyPressed.D) {
 			StartCoroutine(DashDirectionX (dashSpeed, dashTime));
 		}
 	}

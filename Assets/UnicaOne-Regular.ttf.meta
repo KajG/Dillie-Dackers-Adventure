@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 39d0b71d1282bf640b68ccdf7ca50c66
+timeCreated: 1515598233
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 40
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Unica One
+  fontNames:
+  - Unica One
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
