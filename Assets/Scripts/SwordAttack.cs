@@ -15,11 +15,13 @@ public class SwordAttack : MonoBehaviour {
 	private CheckEnemy checkenemy;
 	private FetchInput fetchinput;
 	private SwordPhysics swordphysics;
+	private DamageTextEffect damageText;
 	void Start () {
 		checkenemy = GameObject.Find ("RaycastPlayer").GetComponent<CheckEnemy> ();
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		col = GameObject.Find ("Collider").GetComponent<BoxCollider2D> ();
 		swordphysics = GameObject.Find ("Sword").GetComponent<SwordPhysics> ();
+		damageText = GameObject.Find ("Main Camera").GetComponents ();
 	}
 	void Update () {
 		if (fetchinput.getLastKey == FetchInput.KeyPressed.A) {
@@ -36,13 +38,14 @@ public class SwordAttack : MonoBehaviour {
 	public void Attack(float damage){
 		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
 			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (damage);
+			damageText.CreateText (checkenemy.enemies [damage, checkenemy.enemyIndexes [i]].transform);
 		}
 	}
 	public void AttackAnim(){
-		Destroy (Instantiate (attackAnim, new Vector3(col.transform.position.x + col.offset.x *- 2, col.transform.position.y, 0), Quaternion.identity), swordAnimTime);
+		Instantiate (attackAnim, new Vector3 (col.transform.position.x + col.offset.x * -2, col.transform.position.y, 0), Quaternion.identity);
 	}
 	public void DashAnim(){
-		Destroy (Instantiate (dashAnim, new Vector3(col.transform.position.x + col.offset.x *- 3, col.transform.position.y, 0), Quaternion.identity), swordAnimTime);
+		Instantiate (dashAnim, new Vector3 (col.transform.position.x + col.offset.x * -3, col.transform.position.y, 0), Quaternion.identity);
 	}
 
 }

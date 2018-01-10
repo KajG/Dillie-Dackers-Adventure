@@ -9,7 +9,6 @@ public class SpriteChanger : MonoBehaviour {
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 		getScale = transform.localScale.x;
 	}
-	
 	void Update () {
 		if (fetchinput.getLeftKey) {
 			transform.localScale = new Vector3 (-getScale, transform.localScale.y, transform.localScale.z);
