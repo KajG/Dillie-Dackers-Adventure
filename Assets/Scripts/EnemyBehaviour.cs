@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour {
 	public Transform playerPos;
 	public float damage;
+	public float damageMulitplier;
 	public float chaseDistance;
 	public float attackDistance;
 	public float moveSpeed;
@@ -12,9 +13,11 @@ public class EnemyBehaviour : MonoBehaviour {
 	public float attackTime;
 	public float swingSpeed;
 	private Transform sword;
+	private DamageTextEffect damageText;
 	void Start(){
 		playerPos = GameObject.Find ("Player").GetComponent<Transform> ();
 		sword = GameObject.Find ("Enemy Sword").GetComponent<Transform> ();
+		damageText = GameObject.Find ("Main Camera").GetComponent<DamageTextEffect> ();
 	}
 	void Update(){
 		if (Vector3.Distance (transform.position, playerPos.position) <= chaseDistance && !isAttacking) {
@@ -47,7 +50,9 @@ public class EnemyBehaviour : MonoBehaviour {
 		sword.localEulerAngles = originalAngle;
 		print ("killemn owplz");
 		if (Vector3.Distance (transform.position, playerPos.position) <= attackDistance) {
-			playerPos.GetComponent<PlayerHealth> ().TakeDamage(damage);
+			float randomDamage = Random.Range (damage, damage * damageMulitplier);
+			playerPos.GetComponent<PlayerHealth> ().TakeDamage(randomDamage);
+			damageText.CreateText (randomDamage, damage, playerPos, false);
 			StartCoroutine (Attack ());
 		} else {
 			isAttacking = false;
