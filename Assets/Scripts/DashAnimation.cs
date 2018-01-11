@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DashAnimation : MonoBehaviour {
-
 	public float moveSpeed;
 	public float alphaSpeed;
 	private string direction;

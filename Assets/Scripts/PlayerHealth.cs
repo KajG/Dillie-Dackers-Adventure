@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 	private Slider healthBar;
 	public float getHealth {get{return health;}set{health = value;}}
 	void Start(){
-		healthBar = GameObject.Find("HealthBarPlayer").GetComponentInChildren<Slider> ();
+		healthBar = GameObject.Find("HealthBarPlayer").GetComponent<Slider> ();
 		healthBar.maxValue = health;
 		healthBar.value = health;
 	}
