@@ -10,14 +10,7 @@ public class DamageTextEffect : MonoBehaviour {
 	public int fontSize;
 	public float critSize;
 	public Font font;
-	private SwordAttack swordattack;
-	void Start () {
-		swordattack = GameObject.Find ("Sword").GetComponent<SwordAttack> ();
-	}
-	
-	void Update () {
-		
-	}
+
 	public void CreateText(float randomDamage, float damage, Transform objTrans, bool crit){
 		if (!crit) {
 			GameObject obj = new GameObject ();

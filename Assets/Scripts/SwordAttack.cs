@@ -61,23 +61,23 @@ public class SwordAttack : MonoBehaviour {
 		}
 	}
 	public void Attack(float damage, string typeOfAttack){
-		float randomDamage;
-		bool crit = false;
-		if (typeOfAttack == "slash") {
-			randomDamage = Random.Range (damage, damage * slashDamageMultiplier);
-			if (randomDamage >= critChance * (slashDamageMultiplier / 10) + (damage * (slashDamageMultiplier / 2))) {
-				print (critChance * (slashDamageMultiplier / 10) + damage);
-				crit = true;
-				randomDamage *= Random.Range(1.2f, critMultiplier);
-			}
-		} else {
-			randomDamage = Random.Range (damage, damage * dashDamageMultiplier);
-			if (randomDamage >= critChance * (dashDamageMultiplier / 10) + (damage * (dashDamageMultiplier / 2))) {
-				crit = true;
-				randomDamage *= Random.Range(1.2f, critMultiplier);
-			}
-		}
 		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
+			float randomDamage;
+			bool crit = false;
+			if (typeOfAttack == "slash") {
+				randomDamage = Random.Range (damage, damage * slashDamageMultiplier);
+				if (randomDamage >= critChance * (slashDamageMultiplier / 10) + (damage * (slashDamageMultiplier / 2))) {
+					print (critChance * (slashDamageMultiplier / 10) + damage);
+					crit = true;
+					randomDamage *= Random.Range(1.2f, critMultiplier);
+				}
+			} else {
+				randomDamage = Random.Range (damage, damage * dashDamageMultiplier);
+				if (randomDamage >= critChance * (dashDamageMultiplier / 10) + (damage * (dashDamageMultiplier / 2))) {
+					crit = true;
+					randomDamage *= Random.Range(1.2f, critMultiplier);
+				}
+			}
 			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (randomDamage);
 			damageText.CreateText (randomDamage, damage, checkenemy.enemies [checkenemy.enemyIndexes [i]].transform, crit);
 		}
