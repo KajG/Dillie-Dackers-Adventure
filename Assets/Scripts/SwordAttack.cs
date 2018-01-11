@@ -8,8 +8,10 @@ public class SwordAttack : MonoBehaviour {
 	[SerializeField]private GameObject dashAnim;
 	[SerializeField]private int damage;
 	[SerializeField]private bool someoneHit;
-	public int dashDamageMultiplier;
-	public int slashDamageMultiplier;
+	public float critChance;
+	public float critMultiplier;
+	public float dashDamageMultiplier;
+	public float slashDamageMultiplier;
 	public float slashStartCooldown;
 	public float dashStartCooldown;
 	private float slashCooldown;
@@ -58,16 +60,26 @@ public class SwordAttack : MonoBehaviour {
 			dashCooldown -= Time.fixedDeltaTime;
 		}
 	}
-	public void Attack(int damage, string typeOfAttack){
-		int randomDamage;
+	public void Attack(float damage, string typeOfAttack){
+		float randomDamage;
+		bool crit = false;
 		if (typeOfAttack == "slash") {
 			randomDamage = Random.Range (damage, damage * slashDamageMultiplier);
+			if (randomDamage >= critChance * (slashDamageMultiplier / 10) + damage) {
+				print (critChance * (slashDamageMultiplier / 10) + damage);
+				crit = true;
+				randomDamage *= Random.Range(1.2f, critMultiplier);
+			}
 		} else {
 			randomDamage = Random.Range (damage, damage * dashDamageMultiplier);
+			if (randomDamage >= critChance * (dashDamageMultiplier / 10) + (damage * (dashDamageMultiplier / 2))) {
+				crit = true;
+				randomDamage *= Random.Range(1.2f, critMultiplier);
+			}
 		}
 		for (int i = 0; i < checkenemy.enemyIndexes.Count; i++) {
 			checkenemy.enemies [checkenemy.enemyIndexes[i]].GetComponent<EnemyHealth> ().TakeDamage (randomDamage);
-			damageText.CreateText (randomDamage, damage, checkenemy.enemies [checkenemy.enemyIndexes [i]].transform);
+			damageText.CreateText (randomDamage, damage, checkenemy.enemies [checkenemy.enemyIndexes [i]].transform, crit);
 		}
 	}
 	public void AttackAnim(){

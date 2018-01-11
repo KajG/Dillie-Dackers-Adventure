@@ -11,7 +11,6 @@ public class DamageTextEffect : MonoBehaviour {
 	public float critSize;
 	public Font font;
 	private SwordAttack swordattack;
-	public float critChance;
 	void Start () {
 		swordattack = GameObject.Find ("Sword").GetComponent<SwordAttack> ();
 	}
@@ -19,25 +18,12 @@ public class DamageTextEffect : MonoBehaviour {
 	void Update () {
 		
 	}
-	public void CreateText(int randomDamage, int damage, Transform objTrans){
-		if (randomDamage >= damage * (swordattack.slashDamageMultiplier - critChance) || randomDamage >= damage * (swordattack.dashDamageMultiplier - critChance)) {
-			GameObject critObj = new GameObject ();
-			TextMesh critText = critObj.AddComponent<TextMesh> ();
-			critText.GetComponent<Renderer> ().material = font.material;
-			critText.text = " CRIT -" + randomDamage;
-			critText.fontSize = fontSize;
-			critText.transform.localScale = new Vector3 (fontSizeScale * critSize, fontSizeScale * critSize, fontSizeScale * critSize);
-			critText.color = Color.yellow;
-			critText.font = font;
-			critObj.name = "damageText";
-			print ("the damage was : " + randomDamage);
-			critObj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit, randomSpawnLimit), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
-			StartCoroutine (TextEffect (critText, critObj));
-		} else {
+	public void CreateText(float randomDamage, float damage, Transform objTrans, bool crit){
+		if (!crit) {
 			GameObject obj = new GameObject ();
 			TextMesh text = obj.AddComponent<TextMesh> ();
 			text.GetComponent<Renderer> ().material = font.material;
-			text.text = "-" + randomDamage;
+			text.text = "-" + (int)randomDamage;
 			text.fontSize = fontSize;
 			text.transform.localScale = new Vector3 (fontSizeScale, fontSizeScale, fontSizeScale);
 			text.color = Color.red;
@@ -45,6 +31,18 @@ public class DamageTextEffect : MonoBehaviour {
 			obj.name = "damageText";
 			obj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit, randomSpawnLimit), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
 			StartCoroutine (TextEffect (text, obj));
+		} else {
+			GameObject critObj = new GameObject ();
+			TextMesh critText = critObj.AddComponent<TextMesh> ();
+			critText.GetComponent<Renderer> ().material = font.material;
+			critText.text = " CRIT -" + (int)randomDamage;
+			critText.fontSize = fontSize;
+			critText.transform.localScale = new Vector3 (fontSizeScale * critSize, fontSizeScale * critSize, fontSizeScale * critSize);
+			critText.color = Color.yellow;
+			critText.font = font;
+			critObj.name = "damageText";
+			critObj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit, randomSpawnLimit), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
+			StartCoroutine (TextEffect (critText, critObj));
 		}
 	}
 	public IEnumerator TextEffect(TextMesh text, GameObject obj){

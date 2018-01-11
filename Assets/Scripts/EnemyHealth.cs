@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
-	[SerializeField]private int health;
+	[SerializeField]private float health;
 	private Slider healthBar;
-	public int getHealth {get{return health;}set{health = value;}}
+	public float getHealth {get{return health;}set{health = value;}}
 	void Start(){
 		healthBar = GetComponentInChildren<Slider> ();
 		healthBar.maxValue = health;
 		healthBar.value = health;
 	}
-	public void TakeDamage(int damage){
+	public void TakeDamage(float damage){
 		if (damage < health) {
 			health -= damage;
 		} else {
