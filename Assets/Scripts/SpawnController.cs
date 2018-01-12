@@ -8,6 +8,8 @@ public class SpawnController : MonoBehaviour {
 	private string enemyName;
 	public float rounds;
 	private float roundTimer;
+	private float startHealth;
+	private float startSpeed;
 	private List<GameObject> spawnPoints = new List<GameObject> ();
 	private CheckEnemy checkEnemy;
 	private ScoreController round;
@@ -17,6 +19,8 @@ public class SpawnController : MonoBehaviour {
 		spawnPoints.AddRange(GameObject.FindGameObjectsWithTag("Portal"));
 		roundTimer = maxTimer;
 		enemyName = enemy.name;
+		startHealth = enemy.GetComponent<EnemyHealth> ().getHealth;
+		startSpeed = enemy.GetComponent<EnemyBehaviour> ().moveSpeed;
 	}
 	void Update () {
 		roundTimer -= Time.deltaTime;
@@ -36,5 +40,9 @@ public class SpawnController : MonoBehaviour {
 		enemy.GetComponent<EnemyBehaviour> ().moveSpeed += rounds / 10;
 		obj.name = enemyName;
 		checkEnemy.CheckEnemies ();
+	}
+	public void ResetEnemyStats(){
+		enemy.GetComponent<EnemyHealth> ().getHealth = startHealth;
+		enemy.GetComponent<EnemyBehaviour> ().moveSpeed = startSpeed;
 	}
 }

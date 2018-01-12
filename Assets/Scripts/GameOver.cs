@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour {
 	private GameObject sword;
 	private GameObject player;
-	public GameObject enemy;
 	void Start () {
 		gameObject.SetActive (false);
 		sword = GameObject.Find ("Sword");
@@ -15,7 +14,6 @@ public class GameOver : MonoBehaviour {
 		Time.timeScale = 1;
 		SceneManager.LoadScene (0);
 	}
-
 	public void Quit(){
 		Application.Quit ();
 	}
@@ -24,6 +22,5 @@ public class GameOver : MonoBehaviour {
 		gameObject.SetActive (true);
 		player.SetActive (false);
 		sword.SetActive (false);
-		enemy.GetComponent<EnemyBehaviour> ().ResetStats ();
 	}
 }
