@@ -49,5 +49,8 @@ public class FetchInput : MonoBehaviour{
 		} else if (Input.GetKeyUp(KeyCode.Space)) {
 			spaceKey = false;
 		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.Quit ();
+		}
 	}
 }

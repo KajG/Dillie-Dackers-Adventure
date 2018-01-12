@@ -21,19 +21,19 @@ public class DamageTextEffect : MonoBehaviour {
 			text.color = Color.red;
 			text.font = font;
 			obj.name = "damageText";
-			obj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit, randomSpawnLimit), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
+			obj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit * 2, randomSpawnLimit / 1.5f), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
 			StartCoroutine (TextEffect (text, obj));
 		} else {
 			GameObject critObj = new GameObject ();
 			TextMesh critText = critObj.AddComponent<TextMesh> ();
 			critText.GetComponent<Renderer> ().material = font.material;
-			critText.text = " CRIT -" + (int)randomDamage;
+			critText.text = "-" + (int)randomDamage;
 			critText.fontSize = fontSize;
 			critText.transform.localScale = new Vector3 (fontSizeScale * critSize, fontSizeScale * critSize, fontSizeScale * critSize);
 			critText.color = Color.yellow;
 			critText.font = font;
 			critObj.name = "damageText";
-			critObj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit, randomSpawnLimit), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
+			critObj.transform.position = new Vector3 (objTrans.position.x + Random.Range (-randomSpawnLimit * 2, randomSpawnLimit / 1.5f), objTrans.position.y + objTrans.GetComponent<BoxCollider2D> ().bounds.size.y, objTrans.position.z);
 			StartCoroutine (TextEffect (critText, critObj));
 		}
 	}

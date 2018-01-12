@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 	[SerializeField]private float health;
+	private GameOver gameOver;
 	private Slider healthBar;
 	public float getHealth {get{return health;}set{health = value;}}
-	void Start(){
+	void Awake(){
 		healthBar = GameObject.Find("HealthBarPlayer").GetComponent<Slider> ();
+		gameOver = GameObject.Find ("EndScreen").GetComponent<GameOver> ();
 		healthBar.maxValue = health;
 		healthBar.value = health;
 	}
@@ -15,8 +17,7 @@ public class PlayerHealth : MonoBehaviour {
 		if (damage < health) {
 			health -= damage;
 		} else {
-			gameObject.SetActive (false);
-			Time.timeScale = 0;
+			gameOver.GameOverScreen ();
 		}
 		healthBar.value = health;
 	}

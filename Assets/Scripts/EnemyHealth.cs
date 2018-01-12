@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
 	[SerializeField]private float health;
+	[SerializeField]private GameObject sliceAnimation;
 	private float maxHealth;
 	public float maxSize;
 	private Slider healthBar;
 	public float getHealth {get{return health;}set{health = value;}}
 	private ScoreController score;
 	private EnemyBehaviour enemy;
+	public float sliceAnimationTime;
 	void Start(){
 		healthBar = GetComponentInChildren<Slider> ();
 		score = GameObject.Find ("UICanvas").GetComponent<ScoreController> ();
@@ -21,6 +23,7 @@ public class EnemyHealth : MonoBehaviour {
 	}
 	public void TakeDamage(float damage){
 		if (damage < health) {
+			Destroy(Instantiate (sliceAnimation, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity), sliceAnimationTime);
 			health -= damage;
 		} else {
 			Destroy (gameObject);

@@ -19,7 +19,7 @@ public class SpawnController : MonoBehaviour {
 		enemyName = enemy.name;
 	}
 	void Update () {
-		roundTimer -= Time.fixedDeltaTime;
+		roundTimer -= Time.deltaTime;
 		if (roundTimer <= 0) {
 			roundTimer = maxTimer;
 			rounds++;

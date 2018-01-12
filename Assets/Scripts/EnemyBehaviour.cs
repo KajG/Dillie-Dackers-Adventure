@@ -12,12 +12,16 @@ public class EnemyBehaviour : MonoBehaviour {
 	public bool isAttacking;
 	public float attackTime;
 	public float swingSpeed;
+	private float originalSpeed;
+	private float originalHealth;
 	private Transform sword;
 	private DamageTextEffect damageText;
 	void Start(){
 		playerPos = GameObject.Find ("Player").GetComponent<Transform> ();
-		sword = transform.GetChild (1);
 		damageText = GameObject.Find ("Main Camera").GetComponent<DamageTextEffect> ();
+		sword = transform.GetChild (1);
+		originalSpeed = moveSpeed;
+		originalHealth = GetComponent<EnemyHealth>().getHealth;
 	}
 	void Update(){
 		if (Vector3.Distance (transform.position, playerPos.position) <= chaseDistance && !isAttacking) {
@@ -42,7 +46,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		float time = 0f;
 		while (time <= attackTime) {
 			time += Time.fixedDeltaTime;
-			sword.localEulerAngles += new Vector3 (0, 0, time * 0.9f);
+			sword.localEulerAngles += new Vector3 (0, 0, time * 1.5f);
 			if (time >= attackTime * 0.9f) {
 				sword.localEulerAngles -= new Vector3 (0, 0, swingSpeed);
 			}
@@ -56,5 +60,9 @@ public class EnemyBehaviour : MonoBehaviour {
 		} else {
 			isAttacking = false;
 		}
+	}
+	public void ResetStats(){
+		GetComponent<EnemyHealth> ().getHealth = originalHealth;
+		moveSpeed = originalSpeed;
 	}
 }
