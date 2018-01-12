@@ -10,7 +10,6 @@ public class ParallaxBackground : MonoBehaviour {
 	void Start () {
 		playerPos = GameObject.Find ("Player").GetComponent<Transform> ();
 	}
-	
 	void Update () {
 		float x = Mathf.Lerp (transform.position.x, playerPos.position.x, Time.fixedDeltaTime * scrollingSpeed);
 		transform.position = new Vector3 (x * backgroundDistance, transform.position.y, transform.position.z);

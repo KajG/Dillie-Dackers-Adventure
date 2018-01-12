@@ -9,7 +9,6 @@ public class EnemyLook : MonoBehaviour {
 		player = GameObject.Find("Player").GetComponent<Transform>();
 		enemyScale = transform.localScale.x;
 	}
-
 	void Update(){
 		Vector3 pos = transform.position - player.position;
 		if (pos.x <= 0) {

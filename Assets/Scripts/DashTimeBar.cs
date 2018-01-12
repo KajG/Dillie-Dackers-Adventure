@@ -12,7 +12,6 @@ public class DashTimeBar : MonoBehaviour {
 		staminaBar.maxValue = swordattack.dashStartCooldown;
 		staminaBar.minValue = 0;
 	}
-	
 	void Update () {
 		staminaBar.value = swordattack.dashCooldown;
 	}

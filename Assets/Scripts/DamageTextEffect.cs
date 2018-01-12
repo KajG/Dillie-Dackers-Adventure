@@ -10,7 +10,6 @@ public class DamageTextEffect : MonoBehaviour {
 	public int fontSize;
 	public float critSize;
 	public Font font;
-
 	public void CreateText(float randomDamage, float damage, Transform objTrans, bool crit){
 		if (!crit) {
 			GameObject obj = new GameObject ();

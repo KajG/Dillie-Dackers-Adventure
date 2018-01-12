@@ -7,10 +7,6 @@ public class CheckCollision : MonoBehaviour {
 	void Start () {
 		playermovement = GetComponent<PlayerMovement> ();
 	}
-	
-	void Update () {
-		
-	}
 	void OnCollisionStay2D(Collision2D other){
 		if (other.gameObject.tag == "Floor") {
 			playermovement.getAmountOfJumps = playermovement.getMaxJumps;

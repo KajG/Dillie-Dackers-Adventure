@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour {
 	public Transform playerPos;
 	public float damage;
-	public float damageMulitplier;
+	public float damageMultiplier;
 	public float chaseDistance;
 	public float attackDistance;
 	public float moveSpeed;
@@ -16,7 +16,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	private DamageTextEffect damageText;
 	void Start(){
 		playerPos = GameObject.Find ("Player").GetComponent<Transform> ();
-		sword = GameObject.Find ("Enemy Sword").GetComponent<Transform> ();
+		sword = transform.GetChild (1);
 		damageText = GameObject.Find ("Main Camera").GetComponent<DamageTextEffect> ();
 	}
 	void Update(){
@@ -30,13 +30,14 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 		Vector3 desiredDirection = playerPos.position - transform.position;
 		desiredDirection.Normalize ();
-		transform.position += desiredDirection * moveSpeed;
+		transform.position += desiredDirection * moveSpeed * Time.deltaTime;
 		if (Vector3.Distance (transform.position, playerPos.position) <= attackDistance) {
 			isAttacking = true;
 			StartCoroutine (Attack ());
 		}
 	}
 	IEnumerator Attack(){
+		float randomDamage = Random.Range (damage, damage * damageMultiplier);
 		Vector3 originalAngle = sword.localEulerAngles;
 		float time = 0f;
 		while (time <= attackTime) {
@@ -48,9 +49,7 @@ public class EnemyBehaviour : MonoBehaviour {
 			yield return null;
 		}
 		sword.localEulerAngles = originalAngle;
-		print ("killemn owplz");
-		if (Vector3.Distance (transform.position, playerPos.position) <= attackDistance) {
-			float randomDamage = Random.Range (damage, damage * damageMulitplier);
+		if (Vector3.Distance (transform.position, playerPos.position) <= attackDistance && Time.timeScale != 0) {
 			playerPos.GetComponent<PlayerHealth> ().TakeDamage(randomDamage);
 			damageText.CreateText (randomDamage, damage, playerPos, false);
 			StartCoroutine (Attack ());

@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 
 public class FetchInput : MonoBehaviour{
-
 	private bool upKey;
 	private bool leftKey;
 	private bool rightKey;

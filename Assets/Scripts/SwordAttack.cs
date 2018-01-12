@@ -67,7 +67,6 @@ public class SwordAttack : MonoBehaviour {
 			if (typeOfAttack == "slash") {
 				randomDamage = Random.Range (damage, damage * slashDamageMultiplier);
 				if (randomDamage >= critChance * (slashDamageMultiplier / 10) + (damage * (slashDamageMultiplier / 2))) {
-					print (critChance * (slashDamageMultiplier / 10) + damage);
 					crit = true;
 					randomDamage *= Random.Range(1.2f, critMultiplier);
 				}

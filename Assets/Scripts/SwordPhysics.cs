@@ -7,7 +7,6 @@ public class SwordPhysics : MonoBehaviour {
 	public float desiredAngleLeft;
 	public float desiredAngleRight;
 	public FetchInput fetchinput;
-
 	void Start(){
 		fetchinput = GameObject.Find ("Main Camera").GetComponent<FetchInput> ();
 	}

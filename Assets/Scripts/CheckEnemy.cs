@@ -9,7 +9,7 @@ public class CheckEnemy : MonoBehaviour {
 	public int enemyIndex;
 	public List<int> enemyIndexes = new List<int> ();
 	void Start () {
-		enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+		CheckEnemies ();
 	}
 	void Update () {
 		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, transform.right, distance, layermask);
@@ -31,5 +31,9 @@ public class CheckEnemy : MonoBehaviour {
 			}
 		}
 		enemyIndexes = tempList;
+	}
+	public void CheckEnemies(){
+		enemies.Clear ();
+		enemies.AddRange (GameObject.FindGameObjectsWithTag ("Enemy"));
 	}
 }

@@ -7,7 +7,6 @@ public class SwordStickPlayer : MonoBehaviour {
 	void Start () {
 		player = GameObject.Find ("Player").GetComponent<Transform> ();
 	}
-	
     void Update () {
 		transform.position = player.position;
 	}

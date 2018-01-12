@@ -5,18 +5,28 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
 	[SerializeField]private float health;
+	private float maxHealth;
+	public float maxSize;
 	private Slider healthBar;
 	public float getHealth {get{return health;}set{health = value;}}
+	private ScoreController score;
+	private EnemyBehaviour enemy;
 	void Start(){
 		healthBar = GetComponentInChildren<Slider> ();
+		score = GameObject.Find ("UICanvas").GetComponent<ScoreController> ();
+		enemy = GetComponent <EnemyBehaviour> ();
 		healthBar.maxValue = health;
 		healthBar.value = health;
+		maxHealth = health;
 	}
 	public void TakeDamage(float damage){
 		if (damage < health) {
 			health -= damage;
 		} else {
 			Destroy (gameObject);
+			float scoreMultiplier = (maxHealth * enemy.damage / 100);
+			print (scoreMultiplier);
+			score.AddScore ((int)scoreMultiplier);
 		}
 		healthBar.value = health;
 	}
